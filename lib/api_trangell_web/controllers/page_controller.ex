@@ -32,19 +32,20 @@ defmodule ApiTrangellWeb.PageController do
 
 		# send_resp(conn, 200, Poison.encode!(%{user: user}))
 
-		{:ok, claims} = ApiTrangell.Guardian.decode_and_verify(token)
+		{:ok, _claims} = ApiTrangell.Guardian.decode_and_verify(token)
 		# IO.puts claims
 		json conn, %Person{token: "token"}
 	end
 
 	def kab(conn, %{"token" => token}) do
 		case ApiTrangell.Guardian.decode_and_verify(token) do
-		  {:ok,claims} -> IO.puts "hello"
+		  {:ok,_claims} -> 
+		  	# IO.puts claims
+		  	json conn, %Person{token: "verify"}
 
-		  {:error, any} -> IO.puts "byby"	    
+		  {:error, _any} -> conn
+		  	|> put_status(403)
+		  	|> json(%{ error: "unauthorized"})
 		end
-
-		json conn, %Person{token: "test for test"}
-		# IO.puts resource
 	end
 end
