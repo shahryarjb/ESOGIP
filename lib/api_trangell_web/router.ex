@@ -31,7 +31,7 @@ defmodule ApiTrangellWeb.Router do
         pipe_through :authorized
   
         post "/sign-out", PageController, :sign_out
-        get "/me", PageController, :show
+        post "/me", PageController, :show
       end
     end
   end

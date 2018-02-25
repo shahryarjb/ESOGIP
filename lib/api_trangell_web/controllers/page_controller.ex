@@ -1,36 +1,38 @@
 defmodule Person do
-  defstruct name: "John", age: 27
+	defstruct token: ""
 end
 
 defmodule ApiTrangellWeb.PageController do
-  use ApiTrangellWeb, :controller
+	use ApiTrangellWeb, :controller
 
-def sign_in(conn, %{"password" => password,}) do
-    user = %{id: "1"}
-    
-    case password do
-      2 ->
-      	conn
-    	|> ApiTrangell.Guardian.Plug.sign_in(user)
-    	|> send_resp(204, "")
+	def sign_in(conn, %{"password" => password,}) do
+		user = %{id: "1"}
 
-      _ -> IO.puts "nabashe"  
-    end
-  end
+		case password do
+			2 ->
+				{:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user)
+				json conn, %Person{token: token}
+				_ -> IO.puts "nabashe"  
 
-  def sign_in(conn, _params) do
-    send_resp(conn, 401, Poison.encode!(%{error: "Incorrect password"}))
-  end
+		end 
+	end
 
-  def sign_out(conn, _params) do
-    conn
-    |> ApiTrangell.Guardian.Plug.sign_out()
-    |> send_resp(204, "")
-  end
+	def sign_in(conn, _params) do
+		send_resp(conn, 401, Poison.encode!(%{error: "Incorrect password"}))
+	end
 
-  def show(conn, _params) do
-    user = ApiTrangell.Guardian.Plug.current_resource(conn)
+	def sign_out(conn, _params) do
+		conn
+		|> ApiTrangell.Guardian.Plug.sign_out()
+		|> send_resp(204, "")
+	end
 
-    send_resp(conn, 200, Poison.encode!(%{user: user}))
-  end
+	def show(conn, %{"token" => token}) do
+		# user = ApiTrangell.Guardian.Plug.current_resource(conn)
+
+		# send_resp(conn, 200, Poison.encode!(%{user: user}))
+
+		{:ok, claims} = ApiTrangell.Guardian.decode_and_verify(token)
+		IO.puts claims
+	end
 end
