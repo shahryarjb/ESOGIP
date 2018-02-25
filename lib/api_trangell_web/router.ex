@@ -25,6 +25,7 @@ defmodule ApiTrangellWeb.Router do
         pipe_through :unauthorized
   
         post "/sign-in", PageController, :sign_in
+        post "/kab", PageController, :kab
       end
   
       scope "/" do
