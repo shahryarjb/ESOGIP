@@ -25,7 +25,8 @@ defmodule ApiTrangellWeb.Router do
         pipe_through :unauthorized
   
         post "/sign-in", PageController, :sign_in
-        post "/kab", PageController, :kab
+        post "/verify-token", PageController, :verify_token
+        post "/refresh-token", PageController, :refresh_token
       end
   
       scope "/" do
@@ -36,8 +37,4 @@ defmodule ApiTrangellWeb.Router do
       end
     end
   end
-  # Other scopes may use custom stacks.
-  # scope "/api", ApiTrangellWeb do
-  #   pipe_through :api
-  # end
 end

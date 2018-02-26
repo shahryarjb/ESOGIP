@@ -27,25 +27,33 @@ defmodule ApiTrangellWeb.PageController do
 		|> send_resp(204, "")
 	end
 
-	def show(conn, %{"token" => token}) do
-		# user = ApiTrangell.Guardian.Plug.current_resource(conn)
-
-		# send_resp(conn, 200, Poison.encode!(%{user: user}))
-
-		{:ok, _claims} = ApiTrangell.Guardian.decode_and_verify(token)
-		# IO.puts claims
-		json conn, %Person{token: "token"}
+	def verify_token(conn, %{"token" => token}) do
+		case  ApiTrangell.Guardian.decode_and_verify(token) do
+			{:ok, claims} ->
+				json conn, %Person{token: Map.get(claims, "exp")}
+			{:error, _} ->
+				conn
+				|> put_status(403)
+				|> json(%{ error: "khata"})
+		end
 	end
 
-	def kab(conn, %{"token" => token}) do
-		case ApiTrangell.Guardian.decode_and_verify(token) do
-		  {:ok,_claims} -> 
+	def refresh_token(conn, %{"token" => token}) do
+	
+		case ApiTrangell.Guardian.refresh(token) do
+			{:ok, {old_token, old_claims}, {new_token, new_claims}} ->
 		  	# IO.puts claims
-		  	json conn, %Person{token: "verify"}
+			  json conn,  %{
+					old_token: old_token, 
+					old_claims: old_claims,
+					new_token: new_token, 
+					new_claims: new_claims
+				}
 
-		  {:error, _any} -> conn
-		  	|> put_status(403)
-		  	|> json(%{ error: "unauthorized"})
+			{:error, %CaseClauseError{term: {:error, {:badmatch, false}}}} ->	
+				conn		  
+				|> put_status(404)
+				|> json(%{ error: "errorrrrrr"})
 		end
 	end
 end
