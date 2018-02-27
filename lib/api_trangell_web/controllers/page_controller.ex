@@ -10,7 +10,7 @@ defmodule ApiTrangellWeb.PageController do
 
 		case password do
 			2 ->
-				{:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user, %{some: "claim"}, token_type: "refresh",ttl: {99, :weeks})
+				{:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user, %{some: "claim"}, token_type: "access",ttl: {99, :weeks})
 				json conn, %Person{token: token}
 			_ -> IO.puts "nabashe"  
 
