@@ -10,9 +10,9 @@ defmodule ApiTrangellWeb.PageController do
 
 		case password do
 			2 ->
-				{:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user)
+				{:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user, %{some: "claim"}, token_type: "refresh",ttl: {99, :weeks})
 				json conn, %Person{token: token}
-				_ -> IO.puts "nabashe"  
+			_ -> IO.puts "nabashe"  
 
 		end 
 	end
@@ -39,10 +39,8 @@ defmodule ApiTrangellWeb.PageController do
 	end
 
 	def refresh_token(conn, %{"token" => token}) do
-	
 		case ApiTrangell.Guardian.refresh(token) do
 			{:ok, {old_token, old_claims}, {new_token, new_claims}} ->
-		  	# IO.puts claims
 			  json conn,  %{
 					old_token: old_token, 
 					old_claims: old_claims,
