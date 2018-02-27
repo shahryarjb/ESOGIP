@@ -9,12 +9,17 @@ defmodule ApiTrangellWeb.Router do
     plug :fetch_session
   end
 
+  # pipeline :authorized do
+  #   plug :fetch_session
+  #   plug Guardian.Plug.Pipeline, module: ApiTrangell.Guardian,
+  #     error_handler: ApiTrangell.AuthErrorHandler
+  #   plug Guardian.Plug.VerifySession
+  #   plug Guardian.Plug.LoadResource
+  # end 
+
   pipeline :authorized do
     plug :fetch_session
-    plug Guardian.Plug.Pipeline, module: ApiTrangell.Guardian,
-      error_handler: ApiTrangell.AuthErrorHandler
-    plug Guardian.Plug.VerifySession
-    plug Guardian.Plug.LoadResource
+    plug ApiTrangell.AuthPipeline
   end
 
   scope "/api", ApiTrangellWeb do

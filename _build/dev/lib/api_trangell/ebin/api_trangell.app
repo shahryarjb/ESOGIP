@@ -6,6 +6,7 @@
               {description,"api_trangell"},
               {modules,['Elixir.ApiTrangell','Elixir.ApiTrangell.Application',
                         'Elixir.ApiTrangell.AuthErrorHandler',
+                        'Elixir.ApiTrangell.AuthPipeline',
                         'Elixir.ApiTrangell.Guardian',
                         'Elixir.ApiTrangell.Guardian.Plug',
                         'Elixir.ApiTrangell.Repo','Elixir.ApiTrangellWeb',

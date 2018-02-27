@@ -6,7 +6,7 @@ defmodule ApiTrangellWeb.PageController do
 	use ApiTrangellWeb, :controller
 
 	def sign_in(conn, %{"password" => password,}) do
-		user = %{id: "1"}
+		user = %{id: "1", user: "shahryar"}
 
 		case password do
 			2 ->
