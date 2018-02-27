@@ -9,7 +9,7 @@ defmodule ApiTrangellWeb.PageController do
 		user = %{id: "1", user: "shahryar"}
 
 		case password do
-			2 ->
+			"2" ->
 				{:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user, %{some: "claim"}, token_type: "access",ttl: {99, :weeks})
 				json conn, %Person{token: token}
 			_ -> IO.puts "nabashe"  
@@ -22,9 +22,9 @@ defmodule ApiTrangellWeb.PageController do
 	end
 
 	def sign_out(conn, _params) do
-		conn
-		|> ApiTrangell.Guardian.Plug.sign_out()
-		|> send_resp(204, "")
+		# conn
+		# |> ApiTrangell.Guardian.Plug.sign_out()
+		# |> send_resp(204, "")
 	end
 
 	def verify_token(conn, %{"token" => token}) do
@@ -54,4 +54,8 @@ defmodule ApiTrangellWeb.PageController do
 				|> json(%{ error: "errorrrrrr"})
 		end
 	end
+
+	def current_user(conn) do
+    	Guardian.Plug.current_resource(conn)
+  	end
 end

@@ -2,7 +2,7 @@ defmodule ApiTrangell.AuthPipeline do
 	@claims %{typ: "access"}
 
   use Guardian.Plug.Pipeline, otp_app: :api_trangell,
-                              module: ApiTrangell.Tokens,
+                              module: ApiTrangell.Guardian,
                               error_handler: ApiTrangell.AuthErrorHandler
 
   plug Guardian.Plug.VerifySession, claims: @claims
@@ -10,7 +10,7 @@ defmodule ApiTrangell.AuthPipeline do
   plug Guardian.Plug.EnsureAuthenticated
   plug Guardian.Plug.LoadResource, ensure: true
 
-  
+
   # json VerifyHeader
   # plug Guardian.Plug.VerifyHeader, realm: "Bearer"
   # plug Guardian.Plug.LoadResource, ensure: true, allow_blank: true

@@ -22,24 +22,18 @@ defmodule ApiTrangellWeb.Router do
     plug ApiTrangell.AuthPipeline
   end
 
-  scope "/api", ApiTrangellWeb do
+  scope "/api/users", ApiTrangellWeb do
     pipe_through :api
-
-    scope "/users" do
-      scope "/" do
-        pipe_through :unauthorized
+    pipe_through :unauthorized
+    post "/sign-in", PageController, :sign_in
+    post "/verify-token", PageController, :verify_token
+    post "/refresh-token", PageController, :refresh_token
+  end
   
-        post "/sign-in", PageController, :sign_in
-        post "/verify-token", PageController, :verify_token
-        post "/refresh-token", PageController, :refresh_token
-      end
-  
-      scope "/" do
-        pipe_through :authorized
-  
-        post "/sign-out", PageController, :sign_out
-        post "/me", PageController, :show
-      end
-    end
+  scope "/api/users", ApiTrangellWeb do
+    pipe_through :api
+    pipe_through :authorized
+    post "/sign-out", PageController, :sign_out
+    post "/me", PageController, :show
   end
 end
