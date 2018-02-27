@@ -3,7 +3,7 @@ defmodule ApiTrangell.AuthPipeline do
                               module: ApiTrangell.Tokens,
                               error_handler: ApiTrangell.AuthErrorHandler
 
-  plug Guardian.Plug.VerifySession, claims: @claims
+  plug Guardian.Plug.VerifySession, claims: %{typ: "refresh"}
   plug Guardian.Plug.VerifyHeader, claims: %{typ: "refresh"}, realm: "Bearer"
   plug Guardian.Plug.EnsureAuthenticated
   plug Guardian.Plug.LoadResource, ensure: true
