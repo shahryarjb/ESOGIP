@@ -1,5 +1,5 @@
 {application,api_trangell,
-             [{applications,[kernel,stdlib,elixir,logger,runtime_tools,
+             [{applications,[kernel,stdlib,elixir,logger,runtime_tools,jose,
                              gettext,phoenix_pubsub,cowboy,phoenix_html,
                              phoenix,phoenix_live_reload,guardian,postgrex,
                              phoenix_ecto]},
@@ -23,4 +23,4 @@
               {registered,[]},
               {vsn,"0.0.1"},
               {mod,{'Elixir.ApiTrangell.Application',[]}},
-              {extra_applications,[logger,runtime_tools]}]}.
+              {extra_applications,[logger,runtime_tools,jose]}]}.
