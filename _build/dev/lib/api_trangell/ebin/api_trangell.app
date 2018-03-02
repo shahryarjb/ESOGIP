@@ -5,6 +5,8 @@
                              phoenix_ecto]},
               {description,"api_trangell"},
               {modules,['Elixir.ApiTrangell','Elixir.ApiTrangell.Application',
+                        'Elixir.ApiTrangell.Auth.Token',
+                        'Elixir.ApiTrangell.Auth.Token.Plug',
                         'Elixir.ApiTrangell.AuthErrorHandler',
                         'Elixir.ApiTrangell.AuthPipeline',
                         'Elixir.ApiTrangell.Guardian',

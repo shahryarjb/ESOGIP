@@ -10,7 +10,7 @@ defmodule ApiTrangellWeb.PageController do
 
 		case password do
 			"2" ->
-				{:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user, %{some: "claim", userid: 2, admin: 2}, token_type: "access",ttl: {99, :weeks})
+				{:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user, %{some: "claim", userid: 2, admin: 2, pem: %{default: [:public_profile], user_actions: [:books]}}, token_type: "access",ttl: {99, :weeks})
 				json conn, %Person{token: token}
 			_ -> 
 				conn |> send_resp(204, "")

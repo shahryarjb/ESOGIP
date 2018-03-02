@@ -9,14 +9,6 @@ defmodule ApiTrangellWeb.Router do
     plug :fetch_session
   end
 
-  # pipeline :authorized do
-  #   plug :fetch_session
-  #   plug Guardian.Plug.Pipeline, module: ApiTrangell.Guardian,
-  #     error_handler: ApiTrangell.AuthErrorHandler
-  #   plug Guardian.Plug.VerifySession
-  #   plug Guardian.Plug.LoadResource
-  # end 
-
   pipeline :authorized do
     plug :fetch_session
     plug ApiTrangell.AuthPipeline
@@ -29,7 +21,7 @@ defmodule ApiTrangellWeb.Router do
     post "/verify-token", PageController, :verify_token
     post "/refresh-token", PageController, :refresh_token
   end
-  
+
   scope "/api/users", ApiTrangellWeb do
     pipe_through :api
     pipe_through :authorized
