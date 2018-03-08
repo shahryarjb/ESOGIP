@@ -13,7 +13,7 @@ config :logger, level: :warn
 config :api_trangell, ApiTrangell.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
-  password: "postgres",
+  password: "32505300sh",
   database: "api_trangell_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox

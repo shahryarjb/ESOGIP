@@ -20,7 +20,7 @@ defmodule ApiTrangell.Mixfile do
   def application do
     [
       mod: {ApiTrangell.Application, []},
-      extra_applications: [:logger, :runtime_tools, :jose]
+      extra_applications: [:logger, :runtime_tools, :jose, :httpoison]
     ]
   end
 
@@ -42,6 +42,7 @@ defmodule ApiTrangell.Mixfile do
       {:gettext, "~> 0.11"},
       {:guardian, "~> 1.0"},
       {:jose, "~> 1.8"},
+      {:httpoison, "~> 1.0"},
       {:cowboy, "~> 1.0"}
     ]
   end

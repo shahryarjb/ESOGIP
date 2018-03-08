@@ -10,10 +10,13 @@ defmodule ApiTrangellWeb.PageController do
 
 		case password do
 			"2" ->
-				{:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user, %{some: "claim", userid: 2, admin: 2, pem: %{default: [:public_profile], user_actions: [:books]}}, token_type: "access",ttl: {99, :weeks})
-				json conn, %Person{token: token}
+				perms = %{default: [:public_profile], user_actions: [:books]}
+				# {:ok, token, _claims} = ApiTrangell.Guardian.encode_and_sign(user, %{some: "claim", userid: 2, admin: 2, pem: %{default: [:public_profile], user_actions: [:books]}}, token_type: "access",ttl: {99, :weeks})
+				conn = ApiTrangell.Guardian.Plug.sign_in(conn, user, %{some: "claim", admin: 12}, permissions: perms)
+				# json conn, %Person{token: token}
+				json conn, %Person{token: ApiTrangell.Guardian.Plug.current_token(conn)}
 			_ -> 
-				conn |> send_resp(204, "")
+				conn |> send_resp(204, "sss")
 				json conn, %{error: "you have an error"} 
 
 		end 
@@ -60,4 +63,5 @@ defmodule ApiTrangellWeb.PageController do
 	def current_user(conn) do
     	Guardian.Plug.current_resource(conn)
   	end
+  	
 end

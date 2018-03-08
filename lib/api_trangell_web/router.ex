@@ -15,16 +15,14 @@ defmodule ApiTrangellWeb.Router do
   end
 
   scope "/api/users", ApiTrangellWeb do
-    pipe_through :api
-    pipe_through :unauthorized
+    pipe_through [:api, :unauthorized]
     post "/sign-in", PageController, :sign_in
     post "/verify-token", PageController, :verify_token
     post "/refresh-token", PageController, :refresh_token
   end
 
   scope "/api/users", ApiTrangellWeb do
-    pipe_through :api
-    pipe_through :authorized
+    pipe_through [:api, :authorized]
     post "/sign-out", PageController, :sign_out
     post "/me", PageController, :show
   end

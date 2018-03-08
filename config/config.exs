@@ -46,6 +46,7 @@ config :logger, :console,
   config :api_trangell, ApiTrangell.Guardian,
     issuer: "api_trangell",
     allowed_algos: ["HS256"],
+    ttl: {99, :weeks},
     secret_key: %{
       "alg" => "HS256",
       "k" => "oi1T_d3HenJGPO1enhwAb7bUWaAtTMTfVi0LhkfnA0E",

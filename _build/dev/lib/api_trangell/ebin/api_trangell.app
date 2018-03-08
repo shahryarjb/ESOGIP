@@ -1,8 +1,8 @@
 {application,api_trangell,
              [{applications,[kernel,stdlib,elixir,logger,runtime_tools,jose,
-                             gettext,phoenix_pubsub,cowboy,phoenix_html,
-                             phoenix,phoenix_live_reload,guardian,postgrex,
-                             phoenix_ecto]},
+                             httpoison,gettext,phoenix_pubsub,cowboy,
+                             phoenix_html,phoenix,phoenix_live_reload,
+                             guardian,postgrex,phoenix_ecto]},
               {description,"api_trangell"},
               {modules,['Elixir.ApiTrangell','Elixir.ApiTrangell.Application',
                         'Elixir.ApiTrangell.Auth.Token',
@@ -25,4 +25,4 @@
               {registered,[]},
               {vsn,"0.0.1"},
               {mod,{'Elixir.ApiTrangell.Application',[]}},
-              {extra_applications,[logger,runtime_tools,jose]}]}.
+              {extra_applications,[logger,runtime_tools,jose,httpoison]}]}.

@@ -12,12 +12,21 @@ defmodule ApiTrangell.Auth.Token do
 
   use Guardian.Permissions.Bitwise
 
-  # snip
+  # Takes a resource and returns the value that should go into the "sub" field.
+  # This is the opposite from resource_from_claims
+  def subject_for_token(%{id: id}, _claims) do
+      {:ok, to_string(id)}
+  end
+    # Opposite from subject_for_token. Take the claims and get 
+  def resource_from_claims(%{"sub" => id}) do
+      {:ok, %{id: id, user: "shahryar"}}
+  end
 
+  # Hook into the claims building part to inject permissions into it
   def build_claims(claims, _resource, opts) do
-    claims =
-      claims
-      |> encode_permissions_into_claims!(Keyword.get(opts, :permissions))
-    {:ok, claims}
+      claims =
+        claims
+          |> encode_permissions_into_claims!(Keyword.get(opts, :permissions))
+          {:ok, claims}
   end
 end
